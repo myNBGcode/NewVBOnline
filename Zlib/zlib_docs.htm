@@ -1,0 +1,629 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/REC-html40/loose.dtd">
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<TITLE>zlib Documentation</TITLE>
+<script type="text/javascript">
+<!--
+function mail_to(name, domain)
+{
+  document.write("<a class=\"link\" href=\"mail" + "to:" + name +
+                 "&#64;" + domain + "\">");
+}
+//-->
+</script>
+<STYLE TYPE="text/css">
+  P { margin-bottom: 0em }	<!-- http://www.w3.org/TR/REC-CSS2/box.html -->
+</STYLE>
+<!--  Copyright (c) 1996-2000 Greg Roelofs.  -->
+</HEAD>
+
+
+<BODY BGCOLOR="#FFFFFF" TEXT="#000000" LINK="#0000FF" VLINK="#00A000">
+<H1 ALIGN="center">
+ <IMG WIDTH=369 HEIGHT=204 ALIGN="middle" SRC="images/zlib3d-b1.png" 
+  ALT="zlib">
+</H1>
+<!-- 
+   H4 ALIGN="center"
+    IMG WIDTH=42 HEIGHT=44 ALIGN="middle" SRC="images/happyicon.png" 
+     ALT="[happy face, because it's so darned useful!]"
+   /H4
+ -->
+<H2 ALIGN="center"> Specifications </H2>
+
+<P>
+<HR> <!-- ================================================================= -->
+
+<P>
+The specifications for zlib and deflate were written by
+<a><script type="text/javascript">mail_to("ghost","aladdin.com")</script>Peter Deutsch</a> (Jean-loup co-authored
+the deflate spec), and <A HREF="http://www.rpi.edu/~randeg/">Glenn
+Randers-Pehrson</A> edited and submitted them to the 
+<A HREF="http://www.ietf.org/">Internet Engineering Task Force</A> (IETF) as
+Internet Drafts.  As of 22 May 1996, both have officially achieved RFC status.
+Variously formatted versions are available from many locations around the
+world, as is the related <A HREF="http://www.gzip.org/">gzip</A> specification
+(also written by Peter and also now an RFC).
+
+<P>
+<HR> <!-- ================================================================= -->
+
+<P>
+    <IMG WIDTH=10 HEIGHT=10 SRC="images/li_blue.png" ALT=" * ">
+    <B>zlib</B> specification, revision 3.3 (RFC 1950):
+    <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        HTML format:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc-zlib.html"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc-zlib.html.Z"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc-zlib.html"
+            >US (Texas)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        PDF format:				<!-- NEW 20000806 -->
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1950.pdf"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1950.pdf"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1950.pdf"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1950.pdf"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1950.pdf"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1950.pdf"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1950.pdf"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1950.pdf"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1950.pdf"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1950.pdf"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        ASCII text:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1950.txt"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1950.txt.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1950.txt.gz"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1950.txt"
+            >IETF copy (US West)</A>
+             <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1950.txt.Z"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://madhaus.utcs.utoronto.ca/links/ftp/doc/rfc/rfc1950.txt"
+            >IETF copy (Canada)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1950.txt"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1950.txt"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1950.txt"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1950.Z"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://ftp.nectec.or.th/pub/mirrors/rfc/rfc1950.txt"
+            >IETF copy (Thailand)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1950.txt"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        US letter-size PostScript:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1950.ps"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1950.ps.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1950.ps.gz"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1950.ps"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1950.ps.Z"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1950.ps"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1950.ps"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1950.ps"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1950.ps.Z"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://ftp.nectec.or.th/pub/mirrors/rfc/rfc1950.ps"
+            >IETF copy (Thailand)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1950.ps"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        A4-size PostScript:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1950-a4.ps"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1950-a4.ps.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1950-a4.ps.gz"
+            >US (Texas)</A>
+
+<P>
+<HR> <!-- ================================================================= -->
+
+<P>
+    <IMG WIDTH=10 HEIGHT=10 SRC="images/li_blue.png" ALT=" * ">
+    <B>deflate</B> specification, revision 1.3 (RFC 1951):
+
+    <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        HTML format:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc-deflate.html"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc-deflate.html.Z"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc-deflate.html"
+            >US (Texas)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        PDF format:				<!-- NEW 20000806 -->
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1951.pdf"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1951.pdf"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1951.pdf"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1951.pdf"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1951.pdf"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1951.pdf"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1951.pdf"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1951.pdf"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1951.pdf"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1951.pdf"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        ASCII text:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1951.txt"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1951.txt.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1951.txt.gz"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1951.txt"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1951.txt.Z"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://madhaus.utcs.utoronto.ca/links/ftp/doc/rfc/rfc1951.txt"
+            >IETF copy (Canada)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1951.txt"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1951.txt"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1951.txt"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1951.Z"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://ftp.nectec.or.th/pub/mirrors/rfc/rfc1951.txt"
+            >IETF copy (Thailand)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1951.txt"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        US letter-size PostScript:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1951.ps"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1951.ps.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1951.ps.gz"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1951.ps"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1951.ps.Z"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1951.ps"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1951.ps"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1951.ps"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1951.ps.Z"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://ftp.nectec.or.th/pub/mirrors/rfc/rfc1951.ps"
+            >IETF copy (Thailand)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1951.ps"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        A4-size PostScript:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1951-a4.ps"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1951-a4.ps.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1951-a4.ps.gz"
+            >US (Texas)</A>
+
+<P>
+<HR> <!-- ================================================================= -->
+
+<P>
+    <IMG WIDTH=10 HEIGHT=10 SRC="images/li_blue.png" ALT=" * ">
+    <A HREF="http://www.gzip.org/"><B>gzip</B></A> specification,
+    revision 4.3 (RFC 1952):
+    <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        HTML format:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc-gzip.html"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc-gzip.html.Z"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc-gzip.html"
+            >US (Texas)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        PDF format:				<!-- NEW 20000806 -->
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1952.pdf"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1952.pdf"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1952.pdf"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1952.pdf"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1952.pdf"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1952.pdf"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1952.pdf"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1952.pdf"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1952.pdf"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1952.pdf"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        ASCII text:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1952.txt"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1952.txt.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1952.txt.gz"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1952.txt"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1952.txt.Z"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://madhaus.utcs.utoronto.ca/links/ftp/doc/rfc/rfc1952.txt"
+            >IETF copy (Canada)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1952.txt"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1952.txt"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1952.txt"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1952.Z"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://ftp.nectec.or.th/pub/mirrors/rfc/rfc1952.txt"
+            >IETF copy (Thailand)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1952.txt"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        US letter-size PostScript:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1952.ps"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1952.ps.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1952.ps.gz"
+            >US (Texas)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.isi.edu/in-notes/rfc1952.ps"
+            >IETF copy (US West)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://wuarchive.wustl.edu/doc/rfc/rfc1952.ps.Z"
+            >IETF copy (US Central)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://sunsite.org.uk/rfc/rfc1952.ps"
+            >IETF copy (UK)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.nic.it/rfc/rfc1952.ps"
+            >IETF copy (Italy)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.is.co.za/rfc/rfc1952.ps"
+            >IETF copy (South Africa)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://munnari.oz.au/rfc/rfc1952.ps.Z"
+            >IETF copy (Australia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://ftp.nectec.or.th/pub/mirrors/rfc/rfc1952.ps"
+            >IETF copy (Thailand)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.iij.ad.jp/pub/rfc/rfc1952.ps"
+            >IETF copy (Japan)</A>
+        <P>
+        <IMG WIDTH=10 HEIGHT=10 SRC="images/li_green.png" ALT=" * ">
+        A4-size PostScript:
+        <p>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="http://www.gzip.org/zlib/rfc1952-a4.ps"
+            >France</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://ftp.uu.net/graphics/png/documents/zlib/rfc1952-a4.ps.gz"
+            >US (Virginia)</A>
+            <br>
+            <IMG WIDTH=10 HEIGHT=10 SRC="images/li_yellow.png" ALT=" * ">
+            <A HREF="ftp://swrinde.nde.swri.edu/pub/png/documents/zlib/rfc1952-a4.ps.gz"
+            >US (Texas)</A>
+
+<P>
+<HR> <!-- ================================================================= -->
+
+Click here for an informal explanation of the <A HREF="feldspar.html">
+deflate algorithm</A>.<BR>
+Click here to go to the <A HREF="http://www.libpng.org/pub/png/pngdocs.html"
+ >PNG Documentation Page</A>.<BR>
+Click here to return to the <A HREF="zlib.html">zlib Home Page</A>.
+
+<P>
+<HR> <!-- ================================================================= -->
+<I>Last modified 13 April 2002</I>
+<HR> <!-- ================================================================= -->
+
+<TABLE WIDTH="100%" BORDER=0 CELLPADDING=0>
+  <TR>
+    <TD ALIGN="left">
+      <FONT SIZE="-1">
+      Web page copyright &#169; 1996-2004
+      <A HREF="http://pobox.com/~newt/">Greg Roelofs</A> and
+      <A HREF="http://gailly.net">Jean-loup Gailly</A>.<BR>
+      zlib software copyright &#169; 1995-2004
+      <A HREF="http://gailly.net/">Jean-loup Gailly</A> and
+      <A HREF="http://www.alumni.caltech.edu/~madler/">Mark Adler</A>.
+      </FONT>
+    </TD>
+    <TD ALIGN="right" VALIGN="top">
+      <FONT SIZE="-1">
+<!--  <A HREF="http://www.info-zip.org/pub/infozip/zlib/">Primary site</A>
+      hosted by
+      <A HREF="http://www.freesoftware.com/"><B>FreeSoftware.com</B></A>.
+-->
+      <A HREF="index.html">Primary site</A>
+      hosted by
+      <A HREF="http://www.teaser.fr/"><B>France Teaser</B></A>.<BR>
+      <i>zlib.org</i> domain name donated by
+         <a><script type="text/javascript">mail_to("ag","em.net")</script>Andrew Green</a>.
+      </FONT>
+    </TD>
+  </TR>
+</TABLE>
+
+</BODY>
+</HTML>
